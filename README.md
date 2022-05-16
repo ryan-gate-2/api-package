@@ -1,6 +1,7 @@
 ## Handy Links
 
 https://www.arlekincasino.com/games/pragmaticexternal/BuffaloKing/54986
+https://github.com/kaasdev/handy-info/blob/main/PROVIDER.md
 
 
 ## Installation
