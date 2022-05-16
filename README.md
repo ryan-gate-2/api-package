@@ -1,8 +1,12 @@
 ## Handy Links
 
+Game access info:
 https://www.arlekincasino.com/games/pragmaticexternal/BuffaloKing/54986
 
-https://github.com/kaasdev/handy-info/blob/main/PROVIDER.md
+Provider Client Access:
+https://github.com/kaasplay/info-links/blob/main/PROVIDER.md
+
+
 
 
 ## Installation
