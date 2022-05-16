@@ -1,34 +1,31 @@
-# Main functions and database for westreels api
-
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/westreels/westreels-main.svg?style=flat-square)](https://packagist.org/packages/westreels/westreels-main)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/westreels/westreels-main/run-tests?label=tests)](https://github.com/westreels/westreels-main/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/westreels/westreels-main/Check%20&%20fix%20styling?label=code%20style)](https://github.com/westreels/westreels-main/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/westreels/westreels-main.svg?style=flat-square)](https://packagist.org/packages/westreels/westreels-main)
-
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
-
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/westreels-main.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/westreels-main)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
-
-
-## important
+## Handy Links
 
 https://www.arlekincasino.com/games/pragmaticexternal/BuffaloKing/54986
 
 
-
 ## Installation
 
-You can install the package via composer:
+Add to composer following:
 
-```bash
-composer require westreels/westreels-main
+```    "repositories": [
+    {
+        "type": "path",
+        "url": "../westreels/westreels-main"
+    }
+    ],
 ```
+```
+    "westreels/westreels-main": "*"
+```
+```
+    "post-autoload-dump": [
+        "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+        "@php artisan package:discover --ansi",
+        "@php artisan vendor:publish --force --tag=westreels:westreels-main --ansi"
+    ],
+```
+
+## Migrations
 
 You can publish and run the migrations with:
 
@@ -41,26 +38,6 @@ You can publish the config file with:
 
 ```bash
 php artisan vendor:publish --tag="westreels-main-config"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="westreels-main-views"
-```
-
-## Usage
-
-```php
-$westreelsMain = new Westreels\WestreelsMain();
-echo $westreelsMain->echoPhrase('Hello, Westreels!');
 ```
 
 ### Working with a config file
@@ -89,19 +66,6 @@ Should your package have multiple config files, you can pass their names as an a
 $package
     ->name('your-package-name')
     ->hasConfigFile(['my-config-file', 'another-config-file']);
-```
-
-
-### Working with views
-
-Any views your package provides, should be placed in the `<package root>/resources/views` directory.
-
-You can register these views with the `hasViews` command.
-
-```php
-$package
-    ->name('your-package-name')
-    ->hasViews();
 ```
 
 This will register your views with Laravel.
@@ -179,62 +143,6 @@ $package
     });
 ```
 
-### Working with translations
-
-Any translations your package provides, should be placed in the `<package root>/resources/lang/<language-code>` directory.
-
-You can register these translations with the `hasTranslations` command.
-
-```php
-$package
-    ->name('your-package-name')
-    ->hasTranslations();
-```
-
-This will register the translations with Laravel.
-
-Assuming you save this translation file at `<package root>/resources/lang/en/translations.php`...
-
-```php
-<?php
-
-return [
-    'translatable' => 'translation',
-];
-```
-
-... your package and users will be able to retrieve the translation with:
-
-```php
-trans('your-package-name::translations.translatable'); // returns 'translation'
-```
-
-If your package name starts with `laravel-` then you should leave that off in the example above.
-
-Coding with translation strings as keys, you should create JSON files in `<package root>/resources/lang/<language-code>.json`.
-
-For example, creating `<package root>/resources/lang/it.json` file like so:
-
-```json
-{
-    "Hello!": "Ciao!"
-}
-```
-
-...the output of...
-
-```php
-trans('Hello!');
-``` 
-
-...will be `Ciao!` if the application uses the Italian language.  
-
-Calling `hasTranslations` will also make translations publishable. Users of your package will be able to publish the translations with this command:
-
-```bash
-php artisan vendor:publish --tag=your-package-name-translations
-```
-
 ### Working with assets
 
 Any assets your package provides, should be placed in the `<package root>/resources/dist/` directory.
@@ -304,41 +212,4 @@ $package
         YourCoolPackageCommand::class,
         YourOtherCoolPackageCommand::class,
     ]);
-```
-
-### Working with routes
-
-The `PackageServiceProvider` assumes that any route files are placed in this directory: `<package root>/routes`. Inside that directory you can put any route files.
-
-To register your route, you should pass its name without the extension to the `hasRoute` method. 
-
-If your route file is called `web.php` you can register them like this:
-
-```php
-$package
-    ->name('your-package-name')
-    ->hasRoute('web');
-```
-
-Should your package contain multiple route files, you can just call `hasRoute` multiple times or use `hasRoutes`.
-
-```php
-$package
-    ->name('your-package-name')
-    ->hasRoutes(['web', 'admin']);
-```
-
-### Using lifecycle hooks
-
-You can put any custom logic your package needs while starting up in one of these methods:
-
-- `registeringPackage`: will be called at the start of the `register` method of `PackageServiceProvider` 
-- `packageRegistered`: will be called at the end of the `register` method of `PackageServiceProvider`
-- `bootingPackage`: will be called at the start of the `boot` method of `PackageServiceProvider`
-- `packageBooted`: will be called at the end of the `boot` method of `PackageServiceProvider`
-
-## Testing
-
-```bash
-composer test
 ```
