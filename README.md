@@ -7,11 +7,9 @@ Provider Client Access:
 https://github.com/kaasplay/info-links/blob/main/PROVIDER.md
 
 
+## Composer
 
-
-## Installation
-
-Add to composer following:
+Add to a main laravel composer following:
 
 ```    "repositories": [
     {
@@ -101,6 +99,68 @@ Calling `hasViews` will also make views publishable. Users of your package will 
 ```bash
 php artisan vendor:publish --tag=your-package-name-views
 ```
+
+## NGINX
+
+Nginx install on proxy for pragmatic
+
+```
+	location /vs/ {
+	    add_header 'Access-Control-Allow-Origin' '*' always;
+		add_header	'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, HEAD' always;
+		add_header 'Access-Control-Allow-Credentials' 'true' always;
+		add_header 'Access-Control-Allow-Headers' 'Accept,Accept-Encoding,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Mx-ReqToken,X-Requested-With' always;
+	    add_header Cache-Control "public";
+	    proxy_pass http://demogamesfree.pragmaticplay.net/gs2c/common/games-html5/games/vs/;
+	    proxy_http_version 1.1;
+	    proxy_set_header Upgrade $http_upgrade;
+	    proxy_set_header Connection "upgrade";
+	    gzip_static on;
+        gzip on;
+        gzip_proxied any;
+        gzip_vary on;
+        gzip_http_version 1.1;
+        gzip_types application/javascript application/json text/css text/xml;
+        gzip_comp_level 4;
+	    access_log off;
+	    expires 1y;
+        proxy_connect_timeout 3s;
+	}
+
+	location /cs/ {
+	    add_header 'Access-Control-Allow-Origin' '*' always;
+		add_header	'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, HEAD' always;
+		add_header 'Access-Control-Allow-Credentials' 'true' always;
+		add_header 'Access-Control-Allow-Headers' 'Accept,Accept-Encoding,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Mx-ReqToken,X-Requested-With' always;
+	    add_header Cache-Control "public";
+	    proxy_pass http://demogamesfree.pragmaticplay.net/gs2c/common/games-html5/games/cs/;
+	    proxy_http_version 1.1;
+	    proxy_set_header Upgrade $http_upgrade;
+	    proxy_set_header Connection "upgrade";
+	    gzip_static on;
+        gzip on;
+        gzip_proxied any;
+        gzip_vary on;
+        gzip_http_version 1.1;
+        gzip_types application/javascript application/json text/css text/xml;
+        gzip_comp_level 4;
+	    access_log off;
+	    expires 1y;
+        proxy_connect_timeout 3s;
+	}
+
+	# assets, media
+	location ~* (.+)\.(?:\d+)\.(js|css|png|jpg|svg|jpeg|gif|webp)$ {
+	    etag off;
+	    expires 1M;
+	    access_log off;
+	    add_header Cache-Control "public";
+	    try_files $uri $1.$2;
+	}
+    
+```
+
+
 
 ### Sharing global data with views
 
